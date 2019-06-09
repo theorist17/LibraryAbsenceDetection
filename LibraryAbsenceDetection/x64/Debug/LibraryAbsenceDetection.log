@@ -1,0 +1,39 @@
+﻿  stdafx.cpp
+  Jpegfile.cpp
+c:\users\theorist\documents\visual studio 2017\projects\libraryabsencedetection\libraryabsencedetection\jpegfile.cpp(72): error C2664: 'int MessageBoxW(HWND,LPCWSTR,LPCWSTR,UINT)': cannot convert argument 2 from 'char [200]' to 'LPCWSTR'
+  c:\users\theorist\documents\visual studio 2017\projects\libraryabsencedetection\libraryabsencedetection\jpegfile.cpp(72): note: Types pointed to are unrelated; conversion requires reinterpret_cast, C-style cast or function-style cast
+c:\users\theorist\documents\visual studio 2017\projects\libraryabsencedetection\libraryabsencedetection\jpegfile.cpp(147): error C2664: 'errno_t fopen_s(FILE **,const char *,const char *)': cannot convert argument 2 from 'CString' to 'const char *'
+  c:\users\theorist\documents\visual studio 2017\projects\libraryabsencedetection\libraryabsencedetection\jpegfile.cpp(147): note: No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called
+c:\users\theorist\documents\visual studio 2017\projects\libraryabsencedetection\libraryabsencedetection\jpegfile.cpp(216): error C2665: 'AfxMessageBox': none of the 2 overloads could convert all the argument types
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\atlmfc\include\afxwin.h(6549): note: could be 'int AfxMessageBox(UINT,UINT,UINT)'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\atlmfc\include\afxwin.h(6547): note: or       'int AfxMessageBox(LPCTSTR,UINT,UINT)'
+  c:\users\theorist\documents\visual studio 2017\projects\libraryabsencedetection\libraryabsencedetection\jpegfile.cpp(216): note: while trying to match the argument list '(const char [25], long)'
+c:\users\theorist\documents\visual studio 2017\projects\libraryabsencedetection\libraryabsencedetection\jpegfile.cpp(322): error C2664: 'errno_t fopen_s(FILE **,const char *,const char *)': cannot convert argument 2 from 'CString' to 'const char *'
+  c:\users\theorist\documents\visual studio 2017\projects\libraryabsencedetection\libraryabsencedetection\jpegfile.cpp(322): note: No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called
+c:\users\theorist\documents\visual studio 2017\projects\libraryabsencedetection\libraryabsencedetection\jpegfile.cpp(438): error C2665: 'AfxMessageBox': none of the 2 overloads could convert all the argument types
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\atlmfc\include\afxwin.h(6549): note: could be 'int AfxMessageBox(UINT,UINT,UINT)'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\atlmfc\include\afxwin.h(6547): note: or       'int AfxMessageBox(LPCTSTR,UINT,UINT)'
+  c:\users\theorist\documents\visual studio 2017\projects\libraryabsencedetection\libraryabsencedetection\jpegfile.cpp(438): note: while trying to match the argument list '(const char [13])'
+c:\users\theorist\documents\visual studio 2017\projects\libraryabsencedetection\libraryabsencedetection\jpegfile.cpp(491): error C2664: 'errno_t fopen_s(FILE **,const char *,const char *)': cannot convert argument 2 from 'CString' to 'const char *'
+  c:\users\theorist\documents\visual studio 2017\projects\libraryabsencedetection\libraryabsencedetection\jpegfile.cpp(491): note: No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called
+c:\users\theorist\documents\visual studio 2017\projects\libraryabsencedetection\libraryabsencedetection\jpegfile.cpp(929): error C2665: 'AfxMessageBox': none of the 2 overloads could convert all the argument types
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\atlmfc\include\afxwin.h(6549): note: could be 'int AfxMessageBox(UINT,UINT,UINT)'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\atlmfc\include\afxwin.h(6547): note: or       'int AfxMessageBox(LPCTSTR,UINT,UINT)'
+  c:\users\theorist\documents\visual studio 2017\projects\libraryabsencedetection\libraryabsencedetection\jpegfile.cpp(929): note: while trying to match the argument list '(const char [25], long)'
+c:\users\theorist\documents\visual studio 2017\projects\libraryabsencedetection\libraryabsencedetection\jpegfile.cpp(1027): error C2665: 'AfxMessageBox': none of the 2 overloads could convert all the argument types
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\atlmfc\include\afxwin.h(6549): note: could be 'int AfxMessageBox(UINT,UINT,UINT)'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\atlmfc\include\afxwin.h(6547): note: or       'int AfxMessageBox(LPCTSTR,UINT,UINT)'
+  c:\users\theorist\documents\visual studio 2017\projects\libraryabsencedetection\libraryabsencedetection\jpegfile.cpp(1027): note: while trying to match the argument list '(const char [13])'
+  LibraryAbsenceDetection.cpp
+c:\opencv\build\include\opencv2\core\mat.hpp(1964): warning C4819: The file contains a character that cannot be represented in the current code page (949). Save the file in Unicode format to prevent data loss
+c:\opencv\build\include\opencv2\core\persistence.hpp : warning C4819: The file contains a character that cannot be represented in the current code page (949). Save the file in Unicode format to prevent data loss
+c:\opencv\build\include\opencv2\core\utility.hpp : warning C4819: The file contains a character that cannot be represented in the current code page (949). Save the file in Unicode format to prevent data loss
+c:\opencv\build\include\opencv2\core\utility.hpp : warning C4819: The file contains a character that cannot be represented in the current code page (949). Save the file in Unicode format to prevent data loss
+  LibraryAbsenceDetectionDoc.cpp
+  LibraryAbsenceDetectionView.cpp
+c:\opencv\build\include\opencv2\core\mat.hpp(1964): warning C4819: The file contains a character that cannot be represented in the current code page (949). Save the file in Unicode format to prevent data loss
+c:\opencv\build\include\opencv2\core\persistence.hpp : warning C4819: The file contains a character that cannot be represented in the current code page (949). Save the file in Unicode format to prevent data loss
+c:\opencv\build\include\opencv2\core\utility.hpp : warning C4819: The file contains a character that cannot be represented in the current code page (949). Save the file in Unicode format to prevent data loss
+c:\opencv\build\include\opencv2\core\utility.hpp : warning C4819: The file contains a character that cannot be represented in the current code page (949). Save the file in Unicode format to prevent data loss
+  MainFrm.cpp
+  Generating Code...
