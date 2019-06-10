@@ -314,8 +314,19 @@ void CLibraryAbsenceDetectionView::OnLoadLad()
 	//Care must be taken not to continuously allocate cv::Rect vectors. 
 	//Anything left over at the program end will be cleaned up by the OS.
 	//The problem lies somewhere within OpenCV's code.
+	vector<Rect>* seats = new vector<Rect>;
+	vector<bool>* absence = new vector<bool>;
+
+	Rect rect(100, 150, 150, 150);
+	(*seats).push_back(rect);
+	(*absence).push_back(true);
+
+	Rect rect2(100, 310, 150, 150);
+	(*seats).push_back(rect2);
+	(*absence).push_back(true);
 
 	Mat frame;
+
 	for (;;) {
 		Capture >> frame;
 
@@ -325,12 +336,32 @@ void CLibraryAbsenceDetectionView::OnLoadLad()
 		(*faces).clear();
 
 		face_cascade.detectMultiScale(frame, *faces, 1.1, 2, 0 | CV_HAAR_SCALE_IMAGE, Size(100, 100));
+		
+		for (int j = 0; j < (*absence).size(); j++)
+			(*absence).at(j) = true;
 
 		for (int i = 0; i < (*faces).size(); i++)
 		{
 			Point center((*faces)[i].x + (*faces)[i].width * 0.5, (*faces)[i].y + (*faces)[i].height * 0.5);
-			ellipse(frame, center, Size((*faces)[i].width * 0.5, (*faces)[i].height * 0.5), 0, 0, 360, Scalar(255, 0, 255), 4, 8, 0);
+
+			for (int j = 0; j < (*seats).size(); j++) {
+				Rect seat = (*seats).at(j);
+
+				// Occupied
+				if (seat.x <= center.x &&
+					center.x <= seat.x + seat.width &&
+					seat.y <= center.y &&
+					center.y <= seat.y + seat.height) 
+				{
+					(*absence).at(j) = false;
+					ellipse(frame, center, Size((*faces)[i].width * 0.5, (*faces)[i].height * 0.5), 0, 0, 360, Scalar(180, 20, 0), 4, 8, 0);
+				}
+			}
 		}
+
+		for (int j = 0; j < (*seats).size(); j++)
+			if ((*absence).at(j) == true)
+				rectangle(frame, (*seats).at(j), Scalar(0, 0, 255), 4, 5, 0);
 
 		imshow("video", frame); //"video"라는 창을 생성하여, 각 프레임을 출력
 
@@ -342,3 +373,4 @@ void CLibraryAbsenceDetectionView::OnLoadLad()
 	destroyAllWindows();
 	AfxMessageBox("Completed");   //로드 완료 메세지 출력
 }
+

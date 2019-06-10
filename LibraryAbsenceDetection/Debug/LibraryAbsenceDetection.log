@@ -14,15 +14,18 @@ c:\users\theorist\documents\visual studio 2017\projects\libraryabsencedetection\
               _Tp=double
           ]
 c:\users\theorist\documents\visual studio 2017\projects\libraryabsencedetection\libraryabsencedetection\libraryabsencedetectionview.cpp(271): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-c:\users\theorist\documents\visual studio 2017\projects\libraryabsencedetection\libraryabsencedetection\libraryabsencedetectionview.cpp(328): warning C4018: '<': signed/unsigned mismatch
-c:\users\theorist\documents\visual studio 2017\projects\libraryabsencedetection\libraryabsencedetection\libraryabsencedetectionview.cpp(330): warning C4244: 'argument': conversion from 'double' to '_Tp', possible loss of data
+c:\users\theorist\documents\visual studio 2017\projects\libraryabsencedetection\libraryabsencedetection\libraryabsencedetectionview.cpp(340): warning C4018: '<': signed/unsigned mismatch
+c:\users\theorist\documents\visual studio 2017\projects\libraryabsencedetection\libraryabsencedetection\libraryabsencedetectionview.cpp(343): warning C4018: '<': signed/unsigned mismatch
+c:\users\theorist\documents\visual studio 2017\projects\libraryabsencedetection\libraryabsencedetection\libraryabsencedetectionview.cpp(345): warning C4244: 'argument': conversion from 'double' to '_Tp', possible loss of data
           with
           [
               _Tp=int
           ]
-c:\users\theorist\documents\visual studio 2017\projects\libraryabsencedetection\libraryabsencedetection\libraryabsencedetectionview.cpp(331): warning C4244: 'argument': conversion from 'double' to '_Tp', possible loss of data
+c:\users\theorist\documents\visual studio 2017\projects\libraryabsencedetection\libraryabsencedetection\libraryabsencedetectionview.cpp(347): warning C4018: '<': signed/unsigned mismatch
+c:\users\theorist\documents\visual studio 2017\projects\libraryabsencedetection\libraryabsencedetection\libraryabsencedetectionview.cpp(357): warning C4244: 'argument': conversion from 'double' to '_Tp', possible loss of data
           with
           [
               _Tp=int
           ]
+c:\users\theorist\documents\visual studio 2017\projects\libraryabsencedetection\libraryabsencedetection\libraryabsencedetectionview.cpp(362): warning C4018: '<': signed/unsigned mismatch
   LibraryAbsenceDetection.vcxproj -> C:\Users\theorist\Documents\Visual Studio 2017\Projects\LibraryAbsenceDetection\Debug\LibraryAbsenceDetection.exe
