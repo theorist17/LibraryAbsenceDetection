@@ -464,9 +464,8 @@ void CLibraryAbsenceDetectionView::OnLoadFacedetection()
 						(*end_time).at(r) = clock();
 						//출력
 						clock_t absenceTime = (*end_time).at(r) - (*start_time).at(r);
-						if (absenceTime / 1000.0 >= 25) {   //20초 이상일 때만 출력
-							if (absenceTime / 1000.0 >= 30)
-								cout << "***";
+						if (absenceTime / 1000.0 >= 10) {   //20초 이상일 때만 출력
+							if (absenceTime / 1000.0 >= 15)	cout << "***";
 							cout << seat_name[r] << "비운 시간: " << absenceTime / 1000.0 << " 초" << endl;
 						}
 						(*checkingtime).at(r) = false;
@@ -488,7 +487,7 @@ void CLibraryAbsenceDetectionView::OnLoadFacedetection()
 				else if ((*checkingtime).at(j) == true) {   //시간 재고있는 중 일때
 					(*end_time).at(j) = clock();
 					clock_t absenceTime = (*end_time).at(j) - (*start_time).at(j);
-					if (absenceTime / 1000.0 >= 25) { //25초 이상일 때만 출력
+					if (absenceTime / 1000.0 >= 10) { //25초 이상일 때만 출력
 						rectangle(frame, (*seats).at(j), Scalar(0, 0, 255), 4, 5, 0);
 						hello[j].clear();
 					}

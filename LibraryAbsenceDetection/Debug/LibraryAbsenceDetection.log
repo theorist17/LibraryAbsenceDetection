@@ -26,7 +26,7 @@ c:\users\theorist\documents\visual studio 2017\projects\libraryabsencedetection\
           [
               _Tp=int
           ]
-c:\users\theorist\documents\visual studio 2017\projects\libraryabsencedetection\libraryabsencedetection\libraryabsencedetectionview.cpp(475): warning C4244: 'argument': conversion from 'double' to '_Tp', possible loss of data
+c:\users\theorist\documents\visual studio 2017\projects\libraryabsencedetection\libraryabsencedetection\libraryabsencedetectionview.cpp(474): warning C4244: 'argument': conversion from 'double' to '_Tp', possible loss of data
           with
           [
               _Tp=int
