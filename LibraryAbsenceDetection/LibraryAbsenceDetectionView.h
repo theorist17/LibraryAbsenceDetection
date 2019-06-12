@@ -62,6 +62,8 @@ public:
 	afx_msg void OnLoadJpg();
 	afx_msg void OnLoadAvi();
 	afx_msg void OnLoadLad();
+	bool block_maching(Point flesh, Point& delta, Mat next, Mat prev, int BLOCK_SIZE, int WINDOW_SIZE);
+	afx_msg void OnLoadFacedetection();
 };
 
 #ifndef _DEBUG  // LibraryAbsenceDetectionView.cpp의 디버그 버전

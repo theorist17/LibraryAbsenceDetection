@@ -3,29 +3,33 @@ c:\opencv\build\include\opencv2\core\mat.hpp(1964): warning C4819: The file cont
 c:\opencv\build\include\opencv2\core\persistence.hpp : warning C4819: The file contains a character that cannot be represented in the current code page (949). Save the file in Unicode format to prevent data loss
 c:\opencv\build\include\opencv2\core\utility.hpp : warning C4819: The file contains a character that cannot be represented in the current code page (949). Save the file in Unicode format to prevent data loss
 c:\opencv\build\include\opencv2\core\utility.hpp : warning C4819: The file contains a character that cannot be represented in the current code page (949). Save the file in Unicode format to prevent data loss
-c:\users\theorist\documents\visual studio 2017\projects\libraryabsencedetection\libraryabsencedetection\libraryabsencedetectionview.cpp(267): warning C4244: '=': conversion from '_Tp' to 'int', possible loss of data
+c:\users\theorist\documents\visual studio 2017\projects\libraryabsencedetection\libraryabsencedetection\libraryabsencedetectionview.cpp(265): warning C4244: '=': conversion from '_Tp' to 'int', possible loss of data
           with
           [
               _Tp=double
           ]
-c:\users\theorist\documents\visual studio 2017\projects\libraryabsencedetection\libraryabsencedetection\libraryabsencedetectionview.cpp(270): warning C4244: '=': conversion from '_Tp' to 'int', possible loss of data
+c:\users\theorist\documents\visual studio 2017\projects\libraryabsencedetection\libraryabsencedetection\libraryabsencedetectionview.cpp(268): warning C4244: '=': conversion from '_Tp' to 'int', possible loss of data
           with
           [
               _Tp=double
           ]
-c:\users\theorist\documents\visual studio 2017\projects\libraryabsencedetection\libraryabsencedetection\libraryabsencedetectionview.cpp(271): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-c:\users\theorist\documents\visual studio 2017\projects\libraryabsencedetection\libraryabsencedetection\libraryabsencedetectionview.cpp(340): warning C4018: '<': signed/unsigned mismatch
-c:\users\theorist\documents\visual studio 2017\projects\libraryabsencedetection\libraryabsencedetection\libraryabsencedetectionview.cpp(343): warning C4018: '<': signed/unsigned mismatch
-c:\users\theorist\documents\visual studio 2017\projects\libraryabsencedetection\libraryabsencedetection\libraryabsencedetectionview.cpp(345): warning C4244: 'argument': conversion from 'double' to '_Tp', possible loss of data
+c:\users\theorist\documents\visual studio 2017\projects\libraryabsencedetection\libraryabsencedetection\libraryabsencedetectionview.cpp(269): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\theorist\documents\visual studio 2017\projects\libraryabsencedetection\libraryabsencedetection\libraryabsencedetectionview.cpp(437): warning C4018: '<': signed/unsigned mismatch
+c:\users\theorist\documents\visual studio 2017\projects\libraryabsencedetection\libraryabsencedetection\libraryabsencedetectionview.cpp(438): warning C4244: 'argument': conversion from 'double' to '_Tp', possible loss of data
           with
           [
               _Tp=int
           ]
-c:\users\theorist\documents\visual studio 2017\projects\libraryabsencedetection\libraryabsencedetection\libraryabsencedetectionview.cpp(347): warning C4018: '<': signed/unsigned mismatch
-c:\users\theorist\documents\visual studio 2017\projects\libraryabsencedetection\libraryabsencedetection\libraryabsencedetectionview.cpp(357): warning C4244: 'argument': conversion from 'double' to '_Tp', possible loss of data
+c:\users\theorist\documents\visual studio 2017\projects\libraryabsencedetection\libraryabsencedetection\libraryabsencedetectionview.cpp(451): warning C4018: '<': signed/unsigned mismatch
+c:\users\theorist\documents\visual studio 2017\projects\libraryabsencedetection\libraryabsencedetection\libraryabsencedetectionview.cpp(453): warning C4244: 'argument': conversion from 'double' to '_Tp', possible loss of data
           with
           [
               _Tp=int
           ]
-c:\users\theorist\documents\visual studio 2017\projects\libraryabsencedetection\libraryabsencedetection\libraryabsencedetectionview.cpp(362): warning C4018: '<': signed/unsigned mismatch
+c:\users\theorist\documents\visual studio 2017\projects\libraryabsencedetection\libraryabsencedetection\libraryabsencedetectionview.cpp(475): warning C4244: 'argument': conversion from 'double' to '_Tp', possible loss of data
+          with
+          [
+              _Tp=int
+          ]
+c:\users\theorist\documents\visual studio 2017\projects\libraryabsencedetection\libraryabsencedetection\libraryabsencedetectionview.cpp(345): warning C4715: 'CLibraryAbsenceDetectionView::block_maching': not all control paths return a value
   LibraryAbsenceDetection.vcxproj -> C:\Users\theorist\Documents\Visual Studio 2017\Projects\LibraryAbsenceDetection\Debug\LibraryAbsenceDetection.exe

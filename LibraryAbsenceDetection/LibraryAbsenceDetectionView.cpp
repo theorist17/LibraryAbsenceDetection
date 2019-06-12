@@ -30,6 +30,7 @@ BEGIN_MESSAGE_MAP(CLibraryAbsenceDetectionView, CView)
 	ON_COMMAND(ID_LOAD_JPG, &CLibraryAbsenceDetectionView::OnLoadJpg)
 	ON_COMMAND(ID_LOAD_AVI, &CLibraryAbsenceDetectionView::OnLoadAvi)
 	ON_COMMAND(ID_LOAD_LAD, &CLibraryAbsenceDetectionView::OnLoadLad)
+	ON_COMMAND(ID_LOAD_FACEDETECTION, &CLibraryAbsenceDetectionView::OnLoadFacedetection)
 END_MESSAGE_MAP()
 
 // CLibraryAbsenceDetectionView 생성/소멸
@@ -235,9 +236,6 @@ void CLibraryAbsenceDetectionView::OnLoadAvi()
 	Ky.at<int>(2, 1) = -2;
 	Ky.at<int>(2, 2) = -1;
 
-
-
-
 	bool is_firstframe = true;
 
 	for (;;) {
@@ -284,7 +282,72 @@ void CLibraryAbsenceDetectionView::OnLoadAvi()
 
 void CLibraryAbsenceDetectionView::OnLoadLad()
 {
+	
+}
 
+bool CLibraryAbsenceDetectionView::block_maching(Point input, Point& output, Mat next, Mat prev, int BLOCK_SIZE, int WINDOW_SIZE)
+{
+	int MAXROWS = prev.rows / BLOCK_SIZE;
+	int MAXCOLS = prev.cols / BLOCK_SIZE;
+	int trackingRow = input.y / BLOCK_SIZE;
+	int trackingCol = input.x / BLOCK_SIZE;
+
+	// Find best matching dx, dy (in relative measure)
+	int dx = 0, dy = 0;
+
+	Mat diff;
+	Rect reference(trackingCol * BLOCK_SIZE, trackingRow * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+	cv::absdiff(prev(reference), next(reference), diff);
+	double MAE, min = cv::sum(diff)[0];// / ((double)curr.channels() * BLOCK_SIZE * BLOCK_SIZE);
+
+	// Find best matching block in (r, c as absolute values of x, y in image matrix)
+	int nextRow, nextCol;
+	// Loop searching 8 points each step
+	for (int step = 1, w = WINDOW_SIZE / 2; step <= 3; step++, w = w >> 1) {
+		int dxcenter = dx, dycenter = dy;
+
+		for (int dycandidate = -w; dycandidate <= w; dycandidate += w) {
+			for (int dxcandidate = -w; dxcandidate <= w; dxcandidate += w) {
+				if (dxcandidate == 0 && dycandidate == 0) // no need to consider center point again
+					continue;
+
+				// Bound check block coordinates
+				nextRow = trackingRow + dycenter + dycandidate;
+				nextCol = trackingCol + dxcenter + dxcandidate;
+				if (nextRow < 0 || nextRow >= MAXROWS || nextCol < 0 || nextCol >= MAXCOLS)
+					continue;
+
+				//// Get block coordinate in search window 
+				Rect candidate(nextCol * BLOCK_SIZE, nextRow * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+				cv::absdiff(prev(candidate), next(reference), diff);
+				MAE = cv::sum(diff)[0];// / ((double)prev.channels() * BLOCK_SIZE * BLOCK_SIZE);
+
+				if (MAE < min) {
+					dx = dxcenter + dxcandidate;
+					dy = dycenter + dycandidate;
+					min = MAE;
+				}
+			}
+		}
+	}
+
+	// 위치변동이 큼 
+	if (abs(dx)>5|| abs(dy)>5)
+		return false;
+	// 가장자리 도착
+	else if (nextRow == 0 || nextRow == MAXROWS - 1 || nextCol == 0 || nextCol == MAXCOLS - 1)
+		return false;
+	// 점진적인 변화이며 가장자리가 아니어야
+	else if (dx != 0|| dy!= 0) {
+		output += Point(dx * 16 + 8, dy * 16 + 8);
+		return true;
+	}
+}
+
+
+
+void CLibraryAbsenceDetectionView::OnLoadFacedetection()
+{
 	// TODO: 여기에 명령 처리기 코드를 추가합니다.
 	//AVI 파일 선택하는 다이얼로그
 	CFileDialog dlg(TRUE, ".avi", NULL, NULL, "AVI File (*.avi)|*.avi||");
@@ -299,78 +362,152 @@ void CLibraryAbsenceDetectionView::OnLoadLad()
 	//AVI 파일 로드
 	VideoCapture Capture;
 	Capture.open(filename);
-	
+
 	CascadeClassifier face_cascade;
-	if (!face_cascade.load("C:\\opencv\\sources\\data\\haarcascades\\haarcascade_frontalface_default.xml"))
+	if (!face_cascade.load("C:\\opencv\\sources\\data\\haarcascades\\haarcascade_frontalface_alt2.xml"))
 		AfxMessageBox("Error Classifier");
 
 	//파일에 문제가 있는 경우, 에러 메세지로 표시 후 종료
 	if (!Capture.isOpened())
 		AfxMessageBox("Error Video");
 
+	int seat_num = 3;
+	string seat_name[3] = { "지호","윤성", "인한" };
 
-	vector<Rect>* faces = new vector<Rect>; //never call delete whatever you do
-	//In theory it's a memory leak, however calling delete on a vector of cv::Rect (emptied or not) causes problems.
-	//Care must be taken not to continuously allocate cv::Rect vectors. 
-	//Anything left over at the program end will be cleaned up by the OS.
-	//The problem lies somewhere within OpenCV's code.
+	vector<Rect>* faces = new vector<Rect>;
 	vector<Rect>* seats = new vector<Rect>;
 	vector<bool>* absence = new vector<bool>;
 
-	Rect rect(100, 150, 150, 150);
+	Rect rect(230, 150, 150, 170);   //seat1
 	(*seats).push_back(rect);
 	(*absence).push_back(true);
-
-	Rect rect2(100, 310, 150, 150);
+	Rect rect2(10, 310, 150, 170);   //seat2
 	(*seats).push_back(rect2);
 	(*absence).push_back(true);
+	Rect rect3(240, 290, 150, 170);   //seat3
+	(*seats).push_back(rect3);
+	(*absence).push_back(true);
 
-	Mat frame;
+	//Time
+	vector<clock_t>* start_time = new vector<clock_t>;
+	vector<clock_t>* end_time = new vector<clock_t>;
+	vector<bool>* checkingtime = new vector<bool>;
+	//변수 초기화
+	for (int i = 0; i < seat_num; i++) {
+		(*start_time).push_back(0);
+		(*end_time).push_back(0);
+		(*checkingtime).push_back(false);
+	}
 
+	Mat frame, hsvframe, prame;
+	vector<Mat>* range = new vector<Mat>;
+	vector<Rect>* hello = new vector<Rect>[seat_num];
+
+	Capture >> frame;
+	cvtColor(frame, prame, CV_BGR2GRAY);
 	for (;;) {
 		Capture >> frame;
 
 		if (frame.empty()) //남은 프레임이 없는 경우 반복문 종료
 			break;
 
-		(*faces).clear();
+		/// Convert to grayscale
+		cvtColor(frame, hsvframe, CV_BGR2GRAY);
 
-		face_cascade.detectMultiScale(frame, *faces, 1.1, 2, 0 | CV_HAAR_SCALE_IMAGE, Size(100, 100));
-		
-		for (int j = 0; j < (*absence).size(); j++)
+		/// Apply Histogram Equalization
+		equalizeHist(hsvframe, hsvframe);
+
+
+		for (int j = 0; j < seat_num; j++)
 			(*absence).at(j) = true;
 
-		for (int i = 0; i < (*faces).size(); i++)
-		{
-			Point center((*faces)[i].x + (*faces)[i].width * 0.5, (*faces)[i].y + (*faces)[i].height * 0.5);
+		(*range).clear();
+		for (int i = 0; i < seat_num; i++) {
+			(*range).push_back(hsvframe((*seats).at(i)));
+		}
 
-			for (int j = 0; j < (*seats).size(); j++) {
-				Rect seat = (*seats).at(j);
+		for (int r = 0; r < seat_num; r++) {
+			rectangle(frame, (*seats).at(r), Scalar(0, 255, 0), 4, 5, 0); // 사각형 출력
+
+			(*faces).clear();
+			face_cascade.detectMultiScale((*range).at(r), *faces, 1.1, 2, 0 | CV_HAAR_SCALE_IMAGE, Size(10, 10));
+
+			// 얼굴인식 실패 : 기존얼굴 중심을 추정한다 (블럭매칭)
+			if ((*faces).size() == 0) {
+				for (int i = 0; i < hello[r].size(); i++) {
+					Point center((hello[r])[i].x + (hello[r])[i].width * 0.5, (hello[r])[i].y + (hello[r])[i].height * 0.5);
+					Point fcenter((*seats)[r].x + center.x, (*seats)[r].y + center.y);
+					//Point center : 추적할 좌표, Point delta : 출력할 좌표
+					//Mat range[r] : 블럭매칭 전체 공간, Mat prame((*seats).at(i)) : 이전 프레임 전체공간
+					if (block_maching(center, fcenter, (*range)[r], prame((*seats).at(r)), 16, 8)) {
+						ellipse(frame, fcenter, Size(5, 5), 0, 0, 360, Scalar(0, 255, 255), 2, 8, 0);
+					}
+				}
+			}
+			// 얼굴인식 성공 : 새로운 얼굴로 갱신한다
+			else
+				hello[r] = *faces;
+
+			for (int i = 0; i < (*faces).size(); i++)
+			{
+				Point center((*faces)[i].x + (*faces)[i].width * 0.5, (*faces)[i].y + (*faces)[i].height * 0.5);
+				Point fcenter((*seats)[r].x + center.x, (*seats)[r].y + center.y);
 
 				// Occupied
-				if (seat.x <= center.x &&
-					center.x <= seat.x + seat.width &&
-					seat.y <= center.y &&
-					center.y <= seat.y + seat.height) 
+				if ((*seats)[r].x <= fcenter.x &&
+					fcenter.x <= (*seats)[r].x + (*seats)[r].width &&
+					(*seats)[r].y <= fcenter.y &&
+					fcenter.y <= (*seats)[r].y + (*seats)[r].height)
 				{
-					(*absence).at(j) = false;
-					ellipse(frame, center, Size((*faces)[i].width * 0.5, (*faces)[i].height * 0.5), 0, 0, 360, Scalar(180, 20, 0), 4, 8, 0);
+					(*absence).at(r) = false;
+					if ((*checkingtime).at(r) == true) {   //시간 재고있는 중 일때
+						(*end_time).at(r) = clock();
+						//출력
+						clock_t absenceTime = (*end_time).at(r) - (*start_time).at(r);
+						if (absenceTime / 1000.0 >= 25) {   //20초 이상일 때만 출력
+							if (absenceTime / 1000.0 >= 30)
+								cout << "***";
+							cout << seat_name[r] << "비운 시간: " << absenceTime / 1000.0 << " 초" << endl;
+						}
+						(*checkingtime).at(r) = false;
+						//break;
+					}
+					ellipse(frame, fcenter, Size((*faces)[i].width * 0.5, (*faces)[i].height * 0.5), 0, 0, 360, Scalar(0, 255, 0), 4, 8, 0);
 				}
 			}
 		}
 
-		for (int j = 0; j < (*seats).size(); j++)
-			if ((*absence).at(j) == true)
-				rectangle(frame, (*seats).at(j), Scalar(0, 0, 255), 4, 5, 0);
+		for (int j = 0; j < seat_num; j++) {
+			if ((*absence).at(j) == true) {   //비어 있을때
+
+				if ((*checkingtime).at(j) == false) {   //시간 안재고 있으면
+					(*start_time).at(j) = clock();
+					cout << "start_time:" << (*start_time).at(j) << endl;
+					(*checkingtime).at(j) = true;
+				}
+				else if ((*checkingtime).at(j) == true) {   //시간 재고있는 중 일때
+					(*end_time).at(j) = clock();
+					clock_t absenceTime = (*end_time).at(j) - (*start_time).at(j);
+					if (absenceTime / 1000.0 >= 25) { //25초 이상일 때만 출력
+						rectangle(frame, (*seats).at(j), Scalar(0, 0, 255), 4, 5, 0);
+						hello[j].clear();
+					}
+					else
+						rectangle(frame, (*seats).at(j), Scalar(0, 255, 255), 4, 5, 0);
+				}
+			}
+		}
 
 		imshow("video", frame); //"video"라는 창을 생성하여, 각 프레임을 출력
 
 		if (waitKey(30) >= 0)   //30ms 대기
 			break;
+
+		prame = hsvframe.clone();
 	}
 
 	Capture.release();
 	destroyAllWindows();
 	AfxMessageBox("Completed");   //로드 완료 메세지 출력
-}
 
+}
